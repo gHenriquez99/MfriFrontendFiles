@@ -1,0 +1,57 @@
+{# 20210722 #}
+{% if user.is_authenticated %}
+{% if invoice_batch_list %}
+<h2>
+    Invoice History
+</h2>
+<table  width="98%" border="0" cellspacing="0" cellpadding="0">
+<tr >
+{% if user_write_permission %}<th  class="grid">&nbsp;</th>{% endif %}<th  class="grid">Type</th><th  class="grid">Status</th><th  class="grid">Log Number</th><th  class="grid">Date Sent to Accounting</th><th  class="grid">Date Sent to Bursar</th><th  class="grid">TCode</th><th  class="grid">UMD Term</th><th  class="grid">Item Reference</th>
+</tr>
+    {% for invoice_batch in invoice_batch_list %}
+    <tr>
+      {% if user_write_permission %}
+      <td class="grid"  >
+          <a class="SmallButton" href="{{ invoice_batch.course_edit_url }}" target="_blank">
+         Edit
+        </a>
+      </td>
+      {% endif %}
+      <td class="grid" >
+          {{ invoice_batch.batch_type }}
+      </td>
+      <td class="grid" >
+          {{ invoice_batch.status }}
+      </td>
+    <td class="grid" >
+        {{ invoice_batch.log_number }}
+    </td>
+    <td class="grid" >
+        {% if invoice_batch.date_sent_to_accounting %}
+          {{ invoice_batch.date_sent_to_accounting|date:"m-d-Y H:i" }}
+        {% else %}
+          &nbsp;
+        {% endif %}
+    </td>
+    <td class="grid" >
+        {% if invoice_batch.date_sent_to_bursar %}
+          {{ invoice_batch.date_sent_to_bursar|date:"m-d-Y H:i" }}
+        {% else %}
+          &nbsp;
+        {% endif %}
+    </td>
+    <td class="grid" >
+        {{ invoice_batch.tcode }}
+    </td>
+    <td class="grid" >
+        {{ invoice_batch.umd_term }}
+    </td>
+    <td class="grid" >
+        {{ invoice_batch.item_reference }}
+    </td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endif %}
+{% endif %}

@@ -1,0 +1,132 @@
+{% extends "app_base.html" %}
+
+{% block title %}Scheduled Course Registration Rules : Edit{% endblock %}
+
+{% block content %}
+
+<br><br>
+<div align="center">
+<form action="" method="post">
+      {% csrf_token %}
+        {% if form.errors %}
+            <p>
+                Please correct the errors and click Save again to resubmit the form.
+            </p>
+        {% endif %}
+        
+       <h2>Course Log Number: {{ scheduled_course.log_number }}</h2>
+        {% if update_message %}
+            <h3>{{ update_message }}</h3>
+        {% endif %}
+      <table cellpadding="4" cellspacing="4" width="600" >
+      <tr>
+         <th {% if form.errors.require_training_officer_approval or form.errors.require_epins or form.errors.require_nfasid or form.errors.require_emt_expiration_date %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Registration Process Rules</th>
+         <td {% if form.errors.require_training_officer_approval  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.require_training_officer_approval.label_tag }} {{ form.require_training_officer_approval }} (This will also turn on online registration)<br/>
+             {{ form.require_training_officer_approval.help_text }}<br/>
+             {% if form.errors.require_training_officer_approval %}
+             {{ form.errors.require_training_officer_approval }}<br/>
+             {% endif %}
+         </td>
+       </tr>
+         <tr>
+           <th {% if form.errors.require_ssn %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+           <td {% if form.errors.require_ssn  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+               {{ form.require_ssn.label_tag }} {{ form.require_ssn }}<br/>
+               {{ form.require_ssn.help_text }}<br/>
+               {% if form.errors.require_ssn %}
+               {{ form.errors.require_ssn }}<br/>
+               {% endif %}
+           </td>
+       </tr>
+       </tr>
+         <tr>
+           <th {% if form.errors.require_mfri_student_number %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+           <td {% if form.errors.require_mfri_student_number  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+               {{ form.require_mfri_student_number.label_tag }} {{ form.require_mfri_student_number }}<br/>
+               {{ form.require_mfri_student_number.help_text }}<br/>
+               {% if form.errors.require_mfri_student_number %}
+               {{ form.errors.require_mfri_student_number }}<br/>
+               {% endif %}
+           </td>
+       </tr>
+       <tr>
+         <th {% if form.errors.require_epins %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+         <td {% if form.errors.require_epins  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.require_epins.label_tag }} {{ form.require_epins }}<br/>
+             {{ form.require_epins.help_text }}<br/>
+             {% if form.errors.require_epins %}
+             {{ form.errors.require_epins }}<br/>
+             {% endif %}
+         </td>
+     </tr>
+     <tr>
+         <th {% if fform.errors.require_nfasid %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+         <td {% if form.errors.require_nfasid  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.require_nfasid.label_tag }} {{ form.require_nfasid }}<br/>
+             {{ form.require_nfasid.help_text }}<br/>
+             {% if form.errors.require_nfasid %}
+             {{ form.errors.require_nfasid }}<br/>
+             {% endif %}
+         </td>
+     </tr>
+       <tr>
+         <th {% if form.errors.require_birth_date %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+         <td {% if form.errors.require_birth_date  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.require_birth_date.label_tag }} {{ form.require_birth_date }}<br/>
+             {{ form.require_birth_date.help_text }}<br/>
+             {% if form.errors.require_birth_date %}
+             {{ form.errors.require_birth_date }}<br/>
+             {% endif %}
+         </td>
+     </tr>
+     <tr>
+         <th {% if form.errors.require_emt_expiration_date %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+         <td {% if form.errors.require_emt_expiration_date  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.require_emt_expiration_date.label_tag }} {{ form.require_emt_expiration_date }}<br/>
+             {{ form.require_emt_expiration_date.help_text }}<br/>
+             {% if form.errors.require_emt_expiration_date %}
+             {{ form.errors.require_emt_expiration_date }}<br/>
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+          <th {% if form.errors.require_payment %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+          <td {% if form.errors.require_payment  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+              {{ form.require_payment.label_tag }} {{ form.require_payment }}<br/>
+              {{ form.require_payment.help_text }}<br/>
+              {% if form.errors.require_payment %}
+              {{ form.errors.require_payment }}<br/>
+              {% endif %}
+          </td>
+       </tr>
+       <tr>
+           <th {% if form.errors.allow_late_registration %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+           <td {% if form.errors.allow_late_registration  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+               {{ form.allow_late_registration.label_tag }} {{ form.allow_late_registration }}<br/>
+               {{ form.allow_late_registration.help_text }}<br/>
+               {% if form.errors.allow_late_registration %}
+               {{ form.errors.allow_late_registration }}<br/>
+               {% endif %}
+           </td>
+        </tr>
+       <tr>
+           <th {% if form.errors.allow_late_registration %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>&nbsp;</th>
+           <td {% if form.errors.allow_late_registration  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+               {{ form.when_to_send_registration_alert_email.label_tag }} {{ form.when_to_send_registration_alert_email }}<br/>
+               {{ form.when_to_send_registration_alert_email.help_text }}<br/>
+               {% if form.errors.when_to_send_registration_alert_email %}
+               {{ form.errors.when_to_send_registration_alert_email }}<br/>
+               {% endif %}
+           </td>
+        </tr>
+      </table>
+    <input class="Button" type="Submit" value="Save" name="FormButton" >
+      <input class="Button" type="Submit" value="Close" name="FormButton" onClick="window.close();" >
+</form>
+</div>
+{% endblock %}
+
+{% block main_footer %}<hr>
+{{ effective_date_js|safe }}
+{% endblock %}    

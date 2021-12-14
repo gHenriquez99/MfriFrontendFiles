@@ -1,0 +1,256 @@
+{% extends "app_base.html" %}
+{% load static %}
+
+{% block title %}Scheduled Course Registration Rules : Edit{% endblock %}
+
+{% block content %}
+<br><br>
+<ul class="tab_list">
+    {% for schedule_edit_tab in schedule_edit_tab_list %}
+        <li class="{% if schedule_edit_tab.value == current_schedule_edit_tab.value %}current_tab{% else %}tab_list{% endif %}">
+            {% if schedule_edit_tab.value == current_schedule_edit_tab.value %}
+                {{ schedule_edit_tab.label }}
+            {% else %}
+                {% if schedule_edit_tab.link %}
+                    <a href="{% url 'msched_edit_tab' schedule_edit_tab.link scheduled_course.log_number %}" title="{{ schedule_edit_tab.help}}">{{ schedule_edit_tab.label }}</a>
+                {% else %}
+                    <a href="{% url 'msched_edit' scheduled_course.log_number %}" title="{{ schedule_edit_tab.help}}">{{ schedule_edit_tab.label }}</a>
+                {% endif %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+<div align="center">
+<form action="" method="post">
+      {% csrf_token %}
+        {% if form.errors %}
+            <p>
+                Please correct the errors and click Save again to resubmit the form.
+            </p>
+        {% endif %}
+      <table cellpadding="4" cellspacing="4" width="600" >
+      {% if user.is_superuser %}
+      <tr>
+         <th {% if form.errors.course_description  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.course_description.label_tag }}</th>
+         <td {% if form.errors.course_description  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.course_description }} <br/>
+             {% if form.errors.course_description %}
+             {{ form.errors.course_description }}<br/>
+             {{ form.course_description.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.funding_source_code or form.errors.section_number or form.errors.fiscal_year  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Log Number</th>
+         <td {% if form.errors.funding_source_code or form.errors.section_number or form.errors.fiscal_year  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ scheduled_course.category }}-{{ scheduled_course.level }}-{{ form.funding_source_code }}{{ form.section_number }}-{{ form.fiscal_year }}<br/>
+             {% if form.errors.funding_source_code or form.errors.section_number or form.errors.fiscal_year %}
+             {{ form.errors.funding_source_code }}<br/>
+             {{ form.errors.section_number }}<br/>
+             {{ form.errors.fiscal_year }}<br/>
+             {{ form.funding_source_code.help_text }}
+             {{ form.section_number.help_text }}
+             {{ form.fiscal_year.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.old_format_log_number_section_and_fiscal_year  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.old_format_log_number_section_and_fiscal_year.label_tag }}</th>
+         <td {% if form.errors.old_format_log_number_section_and_fiscal_year  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.old_format_log_number_section_and_fiscal_year }} <br/>
+             {% if form.errors.old_format_log_number_section_and_fiscal_year %}
+             {{ form.errors.old_format_log_number_section_and_fiscal_year }}<br/>
+             {{ form.old_format_log_number_section_and_fiscal_year.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.miemss_log_number  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.miemss_log_number.label_tag }}</th>
+         <td {% if form.errors.miemss_log_number  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.miemss_log_number }} <br/>
+             {% if form.errors.miemss_log_number %}
+             {{ form.errors.miemss_log_number }}<br/>
+             {{ form.miemss_log_number.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.short_log_number  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.short_log_number.label_tag }}</th>
+         <td {% if form.errors.short_log_number  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.short_log_number }} <br/>
+             {% if form.errors.short_log_number %}
+             {{ form.errors.short_log_number }}<br/>
+             {{ form.short_log_number.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      {% else %}
+      <tr>
+         <th  class="entry_form_grid" >Course</th>
+         <td  class="entry_form_grid" >
+             {{ scheduled_course.log_number }} <br/>
+             {{ scheduled_course.miemss_log_number }} <br/>
+         </td>
+      </tr>
+      {% endif %}
+      <tr>
+         <th {% if form.errors.schedule_type or form.errors.is_seminar  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.schedule_type.label_tag }}</th>
+         <td {% if form.errors.schedule_type or form.errors.is_seminar  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.schedule_type }} <br/>
+             Is Seminar: {{ form.is_seminar }}
+             {% if form.errors.schedule_type or form.errors.is_seminar %}
+             {{ form.errors.schedule_type }}<br/>
+             {{ form.schedule_type.help_text }}
+             {{ form.errors.is_seminar }}<br/>
+             {{ form.is_seminar.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.legacy_link  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.legacy_link.label_tag }}</th>
+         <td {% if form.errors.legacy_link  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.legacy_link }} <br/>
+             {% if form.errors.legacy_link %}
+             {{ form.errors.legacy_link }}<br/>
+             {{ form.legacy_link.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.notes  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.notes.label_tag }}</th>
+         <td {% if form.errors.notes  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.notes }} <br/>
+             {% if form.errors.notes %}
+             {{ form.errors.notes }}<br/>
+             {{ form.notes.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.location  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.location.label_tag }}</th>
+         <td {% if form.errors.location  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.location }} <br/>
+             {% if form.errors.location %}
+             {{ form.errors.location }}<br/>
+             {{ form.location.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.legacy_host_region  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.legacy_host_region.label_tag }}</th>
+         <td {% if form.errors.legacy_host_region  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.legacy_host_region }} {{ form.use_legacy_region_priority.label_tag }}: {{ form.use_legacy_region_priority }}<br/>
+             {% if form.errors.legacy_host_region %}
+             {{ form.errors.legacy_host_region }}<br/>
+             {{ form.legacy_host_region.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.legacy_host_section  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.legacy_host_section.label_tag }}</th>
+         <td {% if form.errors.legacy_host_section  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.legacy_host_section }} <br/>
+             {% if form.errors.legacy_host_section %}
+             {{ form.errors.legacy_host_section }}<br/>
+             {{ form.legacy_host_section.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.client  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.client.label_tag }}</th>
+         <td {% if form.errors.client  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.client }} <br/>
+             {% if form.errors.client %}
+             {{ form.errors.client }}<br/>
+             {{ form.client.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.mfri_office  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.mfri_office.label_tag }}</th>
+         <td {% if form.errors.mfri_office  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.mfri_office }} <br/>
+             {% if form.errors.mfri_office %}
+             {{ form.errors.mfri_office }}<br/>
+             {{ form.mfri_office.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.host_agency  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.host_agency.label_tag }}</th>
+         <td {% if form.errors.host_agency  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.host_agency }} {{ form.use_host_agency_priority.label_tag }}: {{ form.use_host_agency_priority }}<br/>
+             {% if form.errors.host_agency %}
+             {{ form.errors.host_agency }}<br/>
+             {{ form.host_agency.help_text }}
+             {% endif %}
+             {{ form.hostreservations.label_tag }} {{ form.hostreservations }} <br/>
+             {% if form.errors.hostreservations %}
+             {{ form.errors.hostreservations }}<br/>
+             {{ form.hostreservations.help_text }}
+             {% endif %}
+             {{ form.hostregistrations.label_tag }}{{ form.hostregistrations }} <br/>
+             {% if form.errors.hostregistrations %}
+             {{ form.errors.hostregistrations }}<br/>
+             {{ form.hostregistrations.help_text }}
+             {% endif %}
+             
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.jurisdiction  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.jurisdiction.label_tag }}</th>
+         <td {% if form.errors.jurisdiction  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.jurisdiction }} {{ form.use_jurisdiction_priority.label_tag }}: {{ form.use_jurisdiction_priority }}<br/>
+             {% if form.errors.jurisdiction %}
+             {{ form.errors.jurisdiction }}<br/>
+             {{ form.jurisdiction.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.use_emt_certification_expiration_priority  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Other Priority Options</th>
+         <td {% if form.errors.use_emt_certification_expiration_priority  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.use_emt_certification_expiration_priority.label_tag }}: {{ form.use_emt_certification_expiration_priority }} <br/>
+             {% if form.errors.use_emt_certification_expiration_priority %}
+             {{ form.errors.use_emt_certification_expiration_priority }}<br/>
+             {{ form.use_emt_certification_expiration_priority.help_text }}
+             {% endif %}
+             {{ form.use_instate_priority.label_tag }}: {{ form.use_instate_priority }}
+             {% if form.errors.use_instate_priority %}
+              {{ form.errors.use_instate_priority }}<br/>
+              {{ form.use_instate_priority.help_text }}
+              {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.coordinator  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.coordinator.label_tag }}</th>
+         <td {% if form.errors.coordinator  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.coordinator }} <br/>
+             {% if form.errors.coordinator %}
+             {{ form.errors.coordinator }}<br/>
+             {{ form.coordinator.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.instructor  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.instructor.label_tag }}</th>
+         <td {% if form.errors.instructor  %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.instructor }} <br/>
+             {% if form.errors.instructor %}
+             {{ form.errors.instructor }}<br/>
+             {{ form.instructor.help_text }}
+             {% endif %}
+         </td>
+      </tr>
+            
+      </table>
+      <input class="Button" type="Submit" value="Save" name="FormButton" >
+      <input class="Button" type="Submit" value="Close" name="FormButton" onClick="window.close();" >
+</form>
+</div>
+{% endblock %}
+
+{% block main_footer %}<hr>
+{{ effective_date_js|safe }}
+{% endblock %}    

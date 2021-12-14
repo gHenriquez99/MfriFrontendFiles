@@ -1,0 +1,91 @@
+{% if object_list %}
+{% if list_title %}
+  <h2>
+      {{ list_title }}
+  </h2>
+{% else %}
+<h2>
+    Registration History
+</h2>
+{% endif %}
+
+<table  width="98%" border="0" cellspacing="0" cellpadding="0">
+<tr >
+<th  class="grid">Date</th><th  class="grid">Course</th><th  class="grid">Location</th><th  class="grid">{% if list_type == "reg" %}Status / Outcome{% else %}Status{% endif %}</th>
+</tr>
+    {% for registration_record in object_list %}
+    <tr>
+    <td class="grid"  >
+        {% if registration_record.is_log_number_valid %}
+          {% if list_type == "webreg" %}
+            <a  href="{% url 'onlinereg_approved_reg_fs' registration_record.log_number %}" target="_blank">
+          {% else %}
+              {% if list_type == "prereg" %}
+                <a  href="/cgi-bin/prereg_list.cgi?SCID={{ registration_record.scheduled_course_id }}" target="_blank">
+              {% else %}
+                {% if list_type == "reg" %}
+                  <a  href="/cgi-bin/stureg_reg.cgi?SCID={{ registration_record.scheduled_course_id }}" target="_blank">
+                {% endif %}
+              {% endif %}
+          {% endif %}
+          {{ registration_record.start_date|date:"m-d-Y" }} - {{ registration_record.end_date|date:"m-d-Y" }}
+          </a>
+        {% else %}
+          {{ registration_record.start_date|date:"m-d-Y" }} - {{ registration_record.end_date|date:"m-d-Y" }}
+        {% endif %}
+    </td>
+    <td class="grid" >
+        {% if registration_record.is_log_number_valid %}
+            {% if list_type == "webreg" %}
+              <a  href="{% url 'onlinereg_approved_reg_fs' registration_record.log_number %}" target="_blank">
+            {% else %}
+                {% if list_type == "prereg" %}
+                  <a  href="/cgi-bin/prereg_list.cgi?SCID={{ registration_record.scheduled_course_id }}" target="_blank">
+                {% else %}
+                  {% if list_type == "reg" %}
+                    <a  href="/cgi-bin/stureg_reg.cgi?SCID={{ registration_record.scheduled_course_id }}" target="_blank">
+                  {% endif %}
+                {% endif %}
+            {% endif %}
+            {{ registration_record.log_number }}<br>
+        </a>
+        {% else %}
+          {{ registration_record.log_number }}<br>
+        {% endif %}
+        {{ registration_record.course_name }}
+        {% if list_type == "reg" %}
+          {% if registration_record.fees > 0 or registration_record.credit > 0 %}
+            {% if registration_record.fees > 0 %}
+              <br>
+              Billed: {{ registration_record.fees }}
+            {% endif %}
+            {% if registration_record.credit > 0 %}
+              <br>
+              Refund: {{ registration_record.credit }}
+              {% else %}
+              <br><a class="SmallButton" href="/cgi-bin/bookfee_edit.cgi?SID={{ student_record_id }}&SRID={{ registration_record.record_id }}&SCID={{ registration_record.scheduled_course_id }}&SED=1&REF=1" >Refund Student</a>
+            {% endif %}
+          {% else %}
+            <br><a class="SmallButton" href="/cgi-bin/bookfee_edit.cgi?SID={{ student_record_id }}&SRID={{ registration_record.record_id }}&SCID={{ registration_record.scheduled_course_id }}&SED=1" >Bill Student</a>
+          {% endif %}
+        {% endif %}
+    </td>
+    <td class="grid" >
+        {{ registration_record.location_name }}
+    </td>
+    <td class="grid" >
+        {{ registration_record.status }}
+        {% if list_type == "reg" %}
+        <br>
+        Grade: {{ registration_record.outcome }}
+        {% endif %}
+        {% if list_type == "webreg" %}
+        <br>
+        Created: {{ registration_record.created_date|date:"m-d-Y H:i" }}
+        {% endif %}
+    </td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endif %}

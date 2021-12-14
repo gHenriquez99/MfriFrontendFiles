@@ -1,0 +1,289 @@
+{% extends "app_base.html" %}
+{% load static %}
+
+{% block title %}Student Record : Student Data Edit{% endblock %}
+
+{% block content %}
+{% if parent_url %}
+<h2><a href="{{ parent_url }}"><img src="{% static "graphics/arrow-left.gif" %}" border="0" alt="Back"> {% if parent_url_label %}{{ parent_url_label }}{% else %}Back{% endif %}</a></h2>
+{% endif %}
+<br><br>
+<div align="center">
+<form action="" method="post">
+      {% csrf_token %}
+        {% if readonly.account_update_message %}
+        <h3>
+            {% for message in readonly.account_update_message %}
+            {{ message }}<br>
+            {% endfor %}
+        </h3>
+        {% endif %}
+        {% if form.errors %}
+            <p>
+                Please correct the errors and click Save again to resubmit the form.
+            </p>
+            <p>
+                {{ form.non_field_errors.as_ul }}
+            </p>
+        {% endif %}
+        {% if student_record_id %}
+        <p>
+          <a class="SmallButton" href="/cgi-bin/strc_edit.cgi?MID={{ student_record_id }}">Old Student Record Form</a>
+        </p>
+        {% endif %}
+      <table cellpadding="4" cellspacing="4" width="800" >
+      <tr>
+         <th {% if form.errors.name %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Student Name</th>
+         <td {% if form.errors.name %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.firstname }} {{ form.middlename }} {{ form.lastname }} {{ form.suffix }} {{ form.show_name_as_is }} Display name as entered. 
+             {% if form.errors.firstname %}
+             <br/>{{ form.errors.firstname }}
+             {% endif %}
+             {% if form.errors.middlename %}
+             <br/>{{ form.errors.middlename }}
+             {% endif %}
+             {% if form.errors.lastname %}
+             <br/>{{ form.errors.lastname }}
+             {% endif %}
+             {% if form.errors.suffix %}
+             <br/>{{ form.errors.suffix }}
+             {% endif %}
+         </td>
+      </tr>
+
+      <tr>
+         <th {% if form.errors.address1 %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>notes</th>
+         <td {% if form.errors.address1 %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.note }}<br/> 
+             {{ form.note.help_text }}
+             {% if form.errors.note %}
+             <br>{{ form.errors.note }}
+             {% endif %}
+         </td>
+      </tr>
+
+      <tr>
+         <th {% if form.errors.address1 %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>PII</th>
+         <td {% if form.errors.address1 %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             Birth Date {{ form.birthdate }}<br/> 
+             {% if form.errors.birthdate %}
+             <br>{{ form.errors.birthdate }}
+             {% endif %}
+             <br>
+             {% if student_record_id %}
+             MFRI Student Number: <b>{{ read_only.mfri_student_number }}</b> {% if user.is_superuser %}<a class="SmallButton" href="{% url 'srec_edit_student_number_pk' student_record_id %}" title="Edit Student Number" >Edit Number</a>{% endif %}
+             {% endif %}
+             <br/>
+             <br>
+             SSN {{ form.id_number }}<br/>
+             {{ form.idnumber.help_text }}
+             {% if form.errors.id_number %}
+             <br>{{ form.errors.id_number }}
+             {% endif %}
+             {% if duplicate_ssn_list %}
+                     <span class="has_error" style="font-size:110%;">The SSN has been found {{ duplicate_ssn_list|length }} additional times in Student Records:</span><br>
+                     {% for duplicate_student_record in duplicate_ssn_list %}
+                         {% if user_write_permission %}
+             	            <a href="https://apps.mfri.org/cgi-bin/strc_edit.cgi?MID={{ duplicate_student_record.id }}" target="_blank" title="Student Record Edit" >{{ duplicate_student_record.full_name }}</a>&nbsp;
+                         {% else %}
+                             {{ duplicate_student_record.full_name }}&nbsp;
+                         {% endif %}
+             	        {{ duplicate_student_record.birth_date|date:"m-d-Y" }} {{ duplicate_student_record.city }} {{ duplicate_student_record.state }}<br>
+                     {% endfor %}
+                     {% if merge_ssn_record_id_string %}
+                         {% if user_write_permission %}
+                             <a href="https://apps.mfri.org/cgi-bin/strc_merge.cgi?SRM={{ merge_ssn_record_id_string }}&SRK={{ student_record_id }}&FB=Select%20Record%20To%20Keep" target="_blank" title="Merge Records" style="padding : 1px; color : #FFFFFF; background-color : #777; border : 1px solid black; font-family : sans-serif; font-size : 100%; text-decoration: none;">Merge Records</a> 
+                         {% endif %}
+                         {{ read_only.name }} <span class="has_error"><<< <<< Name Mismatch on SSN</span>
+                     <span class="has_error">
+                     <br>
+                     A Name Mismatch might indicate a false positive, or a misspelled name.<br>
+                     You should investigate and correct any errors.<br>
+                     Take care not to merge any false positives.
+                     </span>
+                     {% endif %}
+             {% endif %}
+             
+             <br>
+             UMID {{ form.umid }}<br/>
+             {{ form.umid.help_text }}
+             {% if form.errors.umid %}
+             <br>{{ form.errors.umid }}
+             {% endif %}
+             <br>
+             State Provider Number {{ form.epins }}<br/>
+             {{ form.epins.help_text }}
+             {% if form.errors.epins %}
+             <br>{{ form.errors.epins }}
+             {% endif %}
+             {% if duplicate_state_provider_number_list %}
+                     <span class="has_error" style="font-size:110%;">The State Provider Number has been found {{ duplicate_state_provider_number_list|length }} additional times in Student Records:</span><br>
+                     {% for duplicate_student_record in duplicate_state_provider_number_list %}
+                         {% if user_write_permission %}
+             	            <a href="https://apps.mfri.org/cgi-bin/strc_edit.cgi?MID={{ duplicate_student_record.id }}" target="_blank" title="Student Record Edit" >{{ duplicate_student_record.full_name }}</a>&nbsp;
+             	        {% else %}
+             	            {{ duplicate_student_record.full_name }}&nbsp;
+             	        {% endif %}
+             	        {{ duplicate_student_record.birth_date|date:"m-d-Y" }} {{ duplicate_student_record.city }} {{ duplicate_student_record.state }}<br>
+                     {% endfor %}
+                     {% if merge_state_provider_number_record_id_string %}
+                     <a href="https://apps.mfri.org/cgi-bin/strc_merge.cgi?SRM={{ merge_state_provider_number_record_id_string }}&SRK={{ student_record_id }}&FB=Select%20Record%20To%20Keep" target="_blank" title="Merge Records" style="padding : 1px; color : #FFFFFF; background-color : #777; border : 1px solid black; font-family : sans-serif; font-size : 100%; text-decoration: none;">Merge Records</a> {{ read_only.name }} <span class="has_error"><<< <<< Name Mismatch on State Provider Number</span>
+                     <span class="has_error">
+                     <br>
+                     A Name Mismatch might indicate a false positive, or a misspelled name.<br>
+                     You should investigate and correct any errors.<br>
+                     Take care not to merge any false positives.
+                     </span>
+                     {% endif %}
+             {% endif %}
+             <br>
+             NFA SID {{ form.nfa_sid }}<br/>
+             {{ form.nfa_sid.help_text }}
+             {% if form.errors.nfa_sid %}
+             <br>{{ form.errors.nfa_sid }}
+             {% endif %}
+             {% if duplicate_nfa_sid_number_list %}
+                     <span class="has_error" style="font-size:110%;">The State Provider Number has been found {{ duplicate_nfa_sid_number_list|length }} additional times in Student Records:</span><br>
+                     {% for duplicate_student_record in duplicate_nfa_sid_number_list %}
+                         {% if user_write_permission %}
+             	            <a href="https://apps.mfri.org/cgi-bin/strc_edit.cgi?MID={{ duplicate_student_record.id }}" target="_blank" title="Student Record Edit" >{{ duplicate_student_record.full_name }}</a>&nbsp;
+             	        {% else %}
+             	            {{ duplicate_student_record.full_name }}&nbsp;
+             	        {% endif %}
+             	        {{ duplicate_student_record.birth_date|date:"m-d-Y" }} {{ duplicate_student_record.city }} {{ duplicate_student_record.state }}<br>
+                     {% endfor %}
+                     {% if merge_nfa_sid_number_record_id_string %}
+                     <a href="https://apps.mfri.org/cgi-bin/strc_merge.cgi?SRM={{ merge_nfa_sid_number_record_id_string }}&SRK={{ student_record_id }}&FB=Select%20Record%20To%20Keep" target="_blank" title="Merge Records" style="padding : 1px; color : #FFFFFF; background-color : #777; border : 1px solid black; font-family : sans-serif; font-size : 100%; text-decoration: none;">Merge Records</a> {{ read_only.name }} <span class="has_error"><<< <<< Name Mismatch on NFA SID Number</span>
+                     <span class="has_error">
+                     <br>
+                     A Name Mismatch might indicate a false positive, or a misspelled name.<br>
+                     You should investigate and correct any errors.<br>
+                     Take care not to merge any false positives.
+                     </span>
+                     {% endif %}
+             {% endif %}
+
+         </td>
+      </tr>
+
+
+      <tr>
+         <th {% if form.errors.address1 %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Address</th>
+         <td {% if form.errors.address1 %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.address1 }}<br/> 
+             {{ form.address1.help_text }}
+             {% if form.errors.address1 %}
+             <br>{{ form.errors.address1 }}
+             {% endif %}
+             {{ form.address2 }}<br/>
+             {{ form.address2.help_text }}
+             {% if form.errors.address2 %}
+             <br>{{ form.errors.address2 }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.city %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>City</th>
+         <td {% if form.errors.city %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.city }}<br/>
+             {{ form.city.help_text }}
+             {% if form.errors.city %}
+             <br>{{ form.errors.city }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.state %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>State</th>
+         <td {% if form.errors.state %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.state }}<br/>
+             {{ form.state.help_text }}
+             {% if form.errors.state %}
+             <br>{{ form.errors.state }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.postcode %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Zip Code</th>
+         <td {% if form.errors.postcode %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.postcode }}<br/>
+             {{ form.postcode.help_text }}
+             {% if form.errors.postcode %}
+             <br>{{ form.errors.postcode }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.country %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Country (if not US)</th>
+         <td {% if form.errors.country %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.country }}<br/>
+             {{ form.country.help_text }}
+             {% if form.errors.country %}
+             <br>{{ form.errors.country }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.primaryphonenumber %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.primaryphonenumber.label_tag }}</th>
+         <td {% if form.errors.primaryphonenumber %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.primaryphonenumber }}<br/>
+             {{ form.primaryphonenumber.help_text }}
+             {% if form.errors.primaryphonenumber %}
+             <br>{{ form.errors.primaryphonenumber }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.secondaryphonenumber %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.secondaryphonenumber.label_tag }}</th>
+         <td {% if form.errors.secondaryphonenumber %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.secondaryphonenumber }}<br/>
+             {{ form.secondaryphonenumber.help_text }}
+             {% if form.errors.secondaryphonenumber %}
+             <br>{{ form.errors.secondaryphonenumber }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.primaryemail %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.primaryemail.label_tag }}</th>
+         <td {% if form.errors.primaryemail %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.primaryemail }}<br/>
+             {{ form.primaryemail.help_text }}
+             {% if form.errors.primaryemail %}
+             <br>{{ form.errors.primaryemail }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th {% if form.errors.affiliation %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>{{ form.affiliation.label_tag }}</th>
+         <td {% if form.errors.affiliation %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.affiliation }}<br/>
+             {{ form.affiliation.help_text }}
+             {% if form.errors.affiliation %}
+             <br>{{ form.errors.affiliation }}
+             {% endif %}
+         </td>
+      </tr>
+
+      <tr>
+         <th {% if form.errors.affiliation %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>EMT Certification Expiration Date</th>
+         <td {% if form.errors.affiliation %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.certificationexpirationdate }}<br/>
+             {{ form.certificationexpirationdate.help_text }}
+             {% if form.errors.certificationexpirationdate %}
+             <br>{{ form.errors.certificationexpirationdate }}
+             {% endif %}
+         </td>
+      </tr>
+      
+      </table>
+      <input class="Button" type="Submit" value="Save" name="FormButton">
+      <input class="Button" type="Submit" value="Cancel" name="FormButton">
+</form>
+
+<br>
+
+</div>
+{% endblock %}
+
+{% block main_footer %}<hr>
+{{ form_js|safe }}
+{% endblock %}    

@@ -1,0 +1,40 @@
+{% extends "app_base.html" %}
+{% load static %}
+
+{# 20210722 #}
+{% block title %}Student Record : MFRI Student Number Initialize Done{% endblock %}
+
+{% block content %}
+<h2><a href="{% url 'srec_edit_student_data_pk' student_record.id %}"><img src="{% static "graphics/arrow-left.gif" %}" border="0" alt="Back"> Student Record Edit: {{ student_record.full_name }}</a></h2>
+<br><br>
+<div align="center">
+    <p>
+        New MFRI Student Number Assigned.
+    </p>
+      <table cellpadding="4" cellspacing="4" width="600" >
+          <table cellpadding="4" cellspacing="4" width="600" >
+          <table cellpadding="4" cellspacing="4" width="600" >
+              <tr>
+                 <th  class="entry_form_grid" >Name</th>
+                 <td  class="entry_form_grid" >
+                     {{ student_record.full_name }}
+                 </td>
+              </tr>
+
+              <tr>
+                 <th  class="entry_form_grid" >MFRI Student Number</th>
+                 <td  class="entry_form_grid" >
+                     {{ student_record.mfri_student_number }}
+                     {% if mfri_student_number_init_result %}
+                        <br>{{ mfri_student_number_init_result }}
+                     {% endif %}
+                 </td>
+              </tr>
+          </table>
+      </table>
+      <a class="Button" href="{% url 'srec_edit_student_data_pk' student_record.id %}" title="Return To Student Record Edit" style="text-decoration: none;">Ok</a>
+</div>
+{% endblock %}
+
+{% block main_footer %}<hr>
+{% endblock %}    

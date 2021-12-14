@@ -1,0 +1,140 @@
+{% extends "app_base.html" %}
+{% load static %}
+
+{% block title %}Affiliations : View{% endblock %}
+
+{% if user_can_change_options %}
+{% block main_header %}
+{% endblock %}
+{% endif %}
+
+{% block content %}
+{% if user_can_change_options %}
+<h2><a href="{% url 'affiliations_list' %}"><img src="{% static "graphics/arrow-left.gif" %}" border="0" alt="add"> Affiliations</a></h2>
+{% endif %}
+<br><br>
+<div align="center">
+<form action="" method="post">
+      {% csrf_token %}
+        {% if form.errors %}
+            <p>
+                Please correct the errors and click Save again to resubmit the affiliation.
+            </p>
+        {% endif %}
+      <table cellpadding="4" cellspacing="4" width="600" >
+      <tr>
+         <th class="entry_form_grid" >Name</th>
+         <td class="entry_form_grid" >
+             {{ affiliation.name }} {% if affiliation.abbreviation %}({{ affiliation.abbreviation }}){% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th  class="entry_form_grid" >Agency ID Numbers and Codes</th>
+         <td  class="entry_form_grid" >
+             MIEMSS Number: {{ affiliation.miemss_number }}<br/>
+             MFIRS Number: {{ affiliation.mfirs_number }}<br/>
+             Obsolete MFRI Code: {{ affiliation.mfri_code }}
+         </td>
+      </tr>
+      <tr>
+         <th  class="entry_form_grid" >Agency Contact</th>
+         <td  class="entry_form_grid" >
+             Main Number: {{ affiliation.primary_phone_number }}<br/>
+             Other Number: {{ affiliation.secondary_phone_number }}<br/>
+             Fax Number: {{ affiliation.fax_number }}<br/>
+             Email Address: <a href="mailto:{{ affiliation.email_address }}">{{ affiliation.email_address }}</a>
+         </td>
+      </tr>
+      <tr>
+      <th  class="entry_form_section" >Agency Address</th>
+      <td  class="entry_form_section" >
+         <table width="100%" border="0">
+      <tr>
+         <th  class="entry_form_grid" >Street Address</th>
+         <td  class="entry_form_grid" >
+             {{ affiliation.street_address1 }}<br/>
+             {% if affiliation.street_address2 %}
+                {{ affiliation.street_address2 }}<br/>
+             {% endif %}
+             {{ affiliation.street_city }} {{ affiliation.street_state }} {{ affiliation.street_postcode }}
+             {% if affiliation.street_country and affiliation.street_country != "USA" and affiliation.street_country != "US" %}
+                <br/>{{ affiliation.street_country }}
+             {% endif %}
+         </td>
+      </tr>
+      {% if user_can_change_options %}
+      <tr>
+          <th class="entry_form_section" colspan="2">The Street Address should be the primary location of the agency.  The Mailing Address should be the primary mailing address of the agency, if that is different than their Street Address. If the addresses are the same, please mark as "Has Error" below.</th>
+      </tr>
+      {% endif %}
+      <tr>
+         <th  class="entry_form_grid" >Mailing Address</th>
+         <td  class="entry_form_grid" >
+             {{ affiliation.mailing_address1 }}<br/>
+             {% if affiliation.mailing_address2 %}
+                {{ affiliation.mailing_address2 }}<br/>
+             {% endif %}
+             {{ affiliation.mailing_city }} {{ affiliation.mailing_state }} {{ affiliation.mailing_postcode }}
+             {% if affiliation.mailing_country and affiliation.mailing_country != "USA" and affiliation.mailing_country != "US" %}
+                <br/>{{ affiliation.mailing_country }}
+             {% endif %}
+         </td>
+      </tr>
+      </table>
+      </tr>
+      {% if user_can_change_options %}
+      <tr>
+         <th  {% if form.errors.county %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %} >{{ form.county.label_tag }}</th>
+         <td  {% if form.errors.county %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %} >
+             {{ form.county }}<br/>
+             {{ form.county.help_text }}
+             {% if form.errors.county %}
+             <br>{{ form.errors.county }}
+             {% endif %}
+         </td>
+      </tr>
+      <tr>
+          <th {% if form.errors.is_md_emergency_service  or form.errors.has_no_address or form.errors.has_error or form.errors.is_duplicate %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>Options</th>
+          <td {% if form.errors.is_md_emergency_service  or form.errors.has_no_address or form.errors.has_error or form.errors.is_duplicate %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             Is MD Emergency Service {{ form.is_md_emergency_service }} <br/>
+             {{ form.is_md_emergency_service.help_text }}<br/>
+             {% if form.errors.is_md_emergency_service %}
+             {{ form.errors.is_md_emergency_service }}<br/>
+             {% endif %}
+             This Listing Has No Address {{ form.has_no_address }} <br/>
+             {{ form.has_no_address.help_text }}<br/>
+             {% if form.errors.has_no_address %}
+             {{ form.errors.has_no_address }}<br/>
+             {% endif %}
+             This Listing Has an Error {{ form.has_error }} <br/>
+             {{ form.has_error.help_text }}<br/>
+             {% if form.errors.has_error %}
+             {{ form.errors.has_error }}<br/>
+             {% endif %}
+             This Listing is Duplicate {{ form.is_duplicate }} <br/>
+             {{ form.is_duplicate.help_text }}<br/>
+             {% if form.errors.is_duplicate %}
+             {{ form.errors.is_duplicate }}<br/>
+             {% endif %}
+         </td>
+      </tr>
+      {% else %}
+      <tr>
+         <th  class="entry_form_grid" >County</th>
+         <td  class="entry_form_grid" >
+             {{ affiliation.county }}
+         </td>
+      </tr>
+      
+      {% endif %}
+      </table>
+      {% if user_can_change_options %}
+        <input class="Button" type="Submit" value="Save" name="FormButton">
+      {% endif %}
+</form>
+</div>
+{% endblock %}
+
+{% block main_footer %}<hr>
+{{ effective_date_js|safe }}
+{% endblock %}    
