@@ -1,0 +1,50 @@
+{% extends "app_base.html" %}
+{% load static %}
+
+{% block title %}Student Record : MFRI Student Number Edit{% endblock %}
+
+{% block content %}
+{% if parent_url %}
+<h2><a href="{{ parent_url }}"><img src="{% static "graphics/arrow-left.gif" %}" border="0" alt="Back"> {% if parent_url_label %}{{ parent_url_label }}{% else %}Back{% endif %}</a></h2>
+{% endif %}
+<br><br>
+<div align="center">
+<form action="" method="post">
+      {% csrf_token %}
+        {% if readonly.account_update_message %}
+        <h3>
+            {% for message in readonly.account_update_message %}
+            {{ message }}<br>
+            {% endfor %}
+        </h3>
+        {% endif %}
+        {% if form.errors %}
+            <p>
+                Please correct the errors and click Save again to resubmit the form.
+            </p>
+            <p>
+                {{ form.non_field_errors.as_ul }}
+            </p>
+        {% endif %}
+      <table cellpadding="4" cellspacing="4" width="800" >
+      <tr>
+         <th {% if form.errors.name %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>MFRI Student Number</th>
+         <td {% if form.errors.name %} class="entry_form_grid_error" {% else %} class="entry_form_grid" {% endif %}>
+             {{ form.mfri_student_number }} 
+             {% if form.errors.mfri_student_number %}
+             <br/>{{ form.errors.mfri_student_number }}
+             {% endif %}
+             
+             {{ form.ssn }} 
+             
+         </td>
+      </tr>
+      </table>
+      <input class="Button" type="Submit" value="Save" name="FormButton">
+      <input class="Button" type="Submit" value="Cancel" name="FormButton">
+</form>
+</div>
+{% endblock %}
+
+{% block main_footer %}<hr>
+{% endblock %}    

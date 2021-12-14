@@ -1,0 +1,43 @@
+{% load static %}
+{# 20200314 #}
+{% if user.is_authenticated %}
+{% if medical_clearance %}
+    <b>{% if show_gray %}<span style="color:#777777;">{% endif %}Medical Clearance Documentation{% if show_gray %}</span>{% endif %}</b><br>
+    {% if medical_clearance.student_record %}<div class="mc_edit" id="mc_editbox{{ medical_clearance.student_record.id }}">{% endif %}
+        <table cellpadding="2" cellspacing="0" border="1">
+            <tr>
+                <td {% if show_gray %}style="color:#777777;"{% endif %}>
+                    {% if medical_clearance.student_record %}<a class="SmallButton" href="{% url 'smedr_edit_physician_clearance' medical_clearance.student_record.id %}" title="Update Medical Clearance" target="_blank">Update</a>{% endif %}
+                    {% if not medical_clearance.is_cleared %}<img src="{% static "graphics/icon_alert.gif" %}"><span class="has_error">{% endif %}{{ medical_clearance.clearance_type }}{% if not medical_clearance.is_cleared %}</span>{% endif %}
+                </td>
+                <td {% if show_gray %}style="color:#777777;"{% endif %}>
+                    {% if not medical_clearance.is_cleared %}<span class="has_error">{% endif %}{{ medical_clearance.clearance_message }}{% if not medical_clearance.is_cleared %}</span>{% endif %}
+                </td>
+                {% if medical_clearance.determination_date %}
+                <td {% if show_gray %}style="color:#777777;"{% endif %}>
+                    Determination Date
+                </td>
+                <td {% if show_gray %}style="color:#777777;"{% endif %}>
+                    {{ medical_clearance.determination_date }}
+                </td>
+                {% endif %}
+                {% if medical_clearance.exam_date %}
+                <td {% if show_gray %}style="color:#777777;"{% endif %}>
+                    Examination Date
+                </td>
+                <td {% if show_gray %}style="color:#777777;"{% endif %}>
+                    {{ medical_clearance.exam_date }}
+                </td>
+                {% endif %}
+            </tr>
+            {% if medical_clearance.clearance_note %}
+            <tr>
+                <td colspan="6" {% if show_gray %}style="color:#777777;"{% endif %}>
+                    {{ medical_clearance.clearance_note }}
+                </td>
+            </tr>
+            {% endif %}
+        </table> 
+    {% if medical_clearance.student_record %}</div>{% endif %}
+{% endif %}
+{% endif %}
