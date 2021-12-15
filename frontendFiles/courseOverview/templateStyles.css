@@ -68,6 +68,54 @@
   .fieldList {
       float: right;
       display: flex;
+      height: 80%;
+      font-size: 20px;
+      font-weight: bold;
       flex-direction: column;
       justify-content: space-around;
+  }
+
+  .content {
+    height: 100%;
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  input[type=text], select {
+    width: 100%;
+    height: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #E21833;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  .button:hover {
+    background-color: #981E32
+  }
+  
+  .button:active {
+    background-color: #981E32;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
   }
