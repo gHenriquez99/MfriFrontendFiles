@@ -1,0 +1,72 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.umdLettering {
+    color: rgba(255, 255, 255, 0.8500000238418579);
+    font-family: IBM Plex Serif;
+    font-weight: SemiBold;
+    margin: 0;
+    padding-left: 8vw;
+}
+
+.redTopBar {
+    background-color: red;
+    width: 100%;
+    height: 3vw;
+    display: flex;
+    align-items: center;
+}
+
+.gradientDiv {
+    background-image:url('../frontendFiles/images/gradient_banner.jpg');
+    height:13vw;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.mfriLogo {
+    height: 10vw;
+    width: 10vw;
+    padding-left: 2vw;
+}
+
+.headerTextContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-right: 13vw;
+}
+
+.headerP {
+    color: white;
+    font-size: 3vw;
+}
+
+.headerP2 {
+    color: white;
+    font-size: 2vw;
+}
+
+.navButtonsDiv {
+    display: flex;
+    align-self: flex-end;
+    padding-right: 6vw;
+}
+
+.navBarDiv {
+    display: flex;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    /* height: 4vw; */
+    /* align-content: center; */
+}
+
+.navBarOption {
+    font-size: 1.5vw;
+    height: 100%;
+    /* margin-top: 0px;
+    margin-bottom: 0px; */
+}
