@@ -10,27 +10,27 @@
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="templateStyles.css" />
-    <div class='umdHeader'>
+    <div class="umdHeader">
         <h2>UNIVERSITY OF MARYLAND</h2>
     </div>
 </head>
 
 <body>
-    <div class='header-container'>
-        <div class='header'>
-            <div class='mrfiLogo'>
-                <img src='../images/mfri_logo.png' , alt='MFRI Logo' , class='mfriLogo'>
+    <div class="header-container">
+        <div class="header">
+            <div class="mrfiLogo">
+                <img src="../images/mfri_logo.png" , alt="MFRI Logo" , class="mfriLogo" />
             </div>
-            <div class='mfriTitle'>
+            <div class="mfriTitle">
                 <h1>Schedule Maintenance</h1>
                 <h2>Maryland Fire and Rescue Institute, University of Maryland</h2>
             </div>
-            <div class='otherLinks'>
+            <div class="otherLinks">
                 <p>Home | Profile | Logout</p>
             </div>
         </div>
     </div>
-    <div class='nav'>
+    <div class="nav">
         <ul>
             <li><a class="active" href="template.html">Course Info</a></li>
             <li><a href="template.html">Course Management</a></li>
@@ -42,33 +42,31 @@
         </ul>
     </div>
 
-    <div class='column'>
-        <div class='fieldList'>
-            <p>Course</p>
-            <p>Location</p>
-            <p>Notes</p>
-            <p>MFRI Office</p>
-        </div>
-    </div>
+    <div class="grayBox"></div>
 
-    <div class='content'>
-        <div class='textbox'>
-            <form>
-                <label for='course'></label><br>
-                <input type='text' id='course' name='course'><br>
+    <div class="mainContainer">
+        <form class = "mainForm">
+            <div class="formItem">
+                <label for="course">Course</label><br />
+                <input type="text" id="course" name="course" /><br />
+            </div>
+            <div class="formItem">
+                <label for="location">Location</label><br />
+                <input type="text" id="location" name="location" /><br />
+            </div>
+            <div class="formItem">
+                <label for="notes">Notes</label><br />
+                <input type="text" id="notes" name="notes" /><br />
+            </div>
 
-                <label for='location'></label><br>
-                <input type='text' id='location' name='location'><br>
+            <div class="formItem">
+                <label for="office">Office</label><br />
+                <input type="text" id="office" name="office" />
+            </div>
+        </form>
 
-                <label for='notes'></label><br>
-                <input type='text' id='notes' name='notes'><br>
-
-                <label for='office'></label><br>
-                <input type='text' id='office' name='office'>
-              </form> 
-        </div>
-        <div class='saveButton'>
-            <button class='button'>Save</button>
+        <div>
+            <button >Save</button>
         </div>
     </div>
 </body>
