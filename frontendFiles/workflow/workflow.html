@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>MFRI Course Scheduling</title>
+
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="workflow.css"/>
+    <div class='umdHeader'>
+        <h2>UNIVERSITY OF MARYLAND</h2>
+    </div>
+</head>
+
+<body>
+    <div class='header-container'>
+        <div class='header'>
+            <div class='mrfiLogo'>
+                <img src='../images/mfri_logo.png' , alt='MFRI Logo' , class='mfriLogo'>
+            </div>
+            <div class='mfriTitle'>
+                <h1>Schedule Maintenance</h1>
+                <h2>Maryland Fire and Rescue Institute, University of Maryland</h2>
+            </div>
+            <div class='otherLinks'>
+                <p>Home | Profile | Logout</p>
+            </div>
+        </div>
+    </div>
+    <div class='nav'>
+        <ul>
+            <li><a href="template.html">Course Info</a></li>
+            <li><a href="template.html">Course Management</a></li>
+            <li><a class='active' href="template.html">Work Flow</a></li>
+            <li><a href="template.html">Scheduling</a></li>
+            <li><a href="template.html">Registration</a></li>
+            <li><a href="fees.html">Fees</a></li>
+            <li><a href="template.html">Brochure</a></li>
+        </ul>
+    </div>
+
+    <div class='column'>
+        <div class='fieldList'>
+            <p>Schedule Status</p>
+            <p>Options</p>
+        </div>
+    </div>
+
+    <div class='content'>
+        <div class='textbox'>
+            <form>
+                <label for='legacylink'></label><br>
+                <select id='legacylink' name='legacylink'>
+                </select>
+
+                <input type="checkbox" id="deleted" name="deleted" value='deleted'>
+                <label for="deleted">Mark as Deleted</label><br>
+
+                <input type="checkbox" id="transcript" name="transcript" value='transcript'>
+                <label for="transcript">Show on Transcript</label><br>
+
+                <label for="note">Optional Note</label><br/>
+                <input type="text" id="note" name="note"/><br/>
+
+                <input type="checkbox" id="evaluations" name="evaluations" value='evaluations'>
+                <label for="evaluations">Require Program Evaluations</label><br>
+
+                <label for="note2">Optional Note</label><br/>
+                <input type="text" id="note2" name="note2"/><br/>
+              </form> 
+        </div>
+        <div class='saveButton'>
+            <button class='button'>Next</button>
+        </div>
+    </div>
+</body>
+
+</html>
