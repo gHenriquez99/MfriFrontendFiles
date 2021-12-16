@@ -1,12 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <title>MFRI Course Scheduling</title>
+
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="fees.css"/>
+    <div class='umdHeader'>
+        <h2>UNIVERSITY OF MARYLAND</h2>
+    </div>
 </head>
+
 <body>
-    
+    <div class='header-container'>
+        <div class='header'>
+            <div class='mrfiLogo'>
+                <img src='./images/mfri_logo.png' , alt='MFRI Logo' , class='mfriLogo'>
+            </div>
+            <div class='mfriTitle'>
+                <h1>Schedule Maintenance</h1>
+                <h2>Maryland Fire and Rescue Institute, University of Maryland</h2>
+            </div>
+            <div class='otherLinks'>
+                <p>Home | Profile | Logout</p>
+            </div>
+        </div>
+    </div>
+    <div class='nav'>
+        <ul>
+            <li><a href="template.html">Course Info</a></li>
+            <li><a href="template.html">Course Management</a></li>
+            <li><a href="template.html">Work Flow</a></li>
+            <li><a href="template.html">Scheduling</a></li>
+            <li><a href="template.html">Registration</a></li>
+            <li><a class="active" href="fees.html">Fees</a></li>
+            <li><a href="template.html">Brochure</a></li>
+        </ul>
+    </div>
+
+    <div class='column'>
+        <div class='fieldList'>
+            <p>In-State Fee</p>
+            <p>Out of State Fee</p>
+            <p>Resource Fee</p>
+            <p>Book Billing Through Bursar<br>T-Code</p>
+            <p>UMD Term</p>
+        </div>
+    </div>
+
+    <div class='content'>
+        <div class='textbox'>
+            <form>
+                <label for='instate'></label><br>
+                <input type='number' id='instate' name='instate' min='0' max='100'><br>
+
+                <label for='outstate'></label><br>
+                <input type='number' id='outstate' name='outstate' min='0' max='100'><br>
+
+                <label for='resource'></label><br>
+                <input type='number' id='resource' name='resource' min='0' max='100'><br>
+
+                <label for='tcode'></label><br>
+                <select id='tcode' name='tcode'>
+                    <option value='code'>MFRI Book Fee (430196-3924) 1528</option>
+                </select>
+
+                <label for='umdterm'></label><br>
+                <select id='umdterm' name='umdterm'>
+                    <option id='term'>Summer 1 (5)</option>
+                </select>
+              </form> 
+        </div>
+        <div class='saveButton'>
+            <button class='button'>Next</button>
+        </div>
+    </div>
 </body>
+
 </html>
