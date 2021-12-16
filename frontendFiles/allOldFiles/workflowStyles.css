@@ -1,5 +1,12 @@
+    /* Work Flow - 1 */
+    
 * {
-    box-sizing: border-box;
+position: relative;
+width: 2853px;
+height: 1783px;
+
+background: #FFFFFF;
+
   }
   body {
     font-size: 14px;
