@@ -3,41 +3,41 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>MFRI Course Scheduling</title>
+    <title>MFRI: Course Scheduling</title>
 
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet" />
 
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="scheduling.css"/>
-    <div class='umdHeader'>
+    <link rel="stylesheet" href="scheduling.css" />
+    <div class="umdHeader">
         <h2>UNIVERSITY OF MARYLAND</h2>
     </div>
 </head>
 
 <body>
-    <div class='header-container'>
-        <div class='header'>
-            <div class='mrfiLogo'>
-                <img src='../images/mfri_logo.png' , alt='MFRI Logo' , class='mfriLogo'>
+    <div class="header-container">
+        <div class="header">
+            <div class="mrfiLogo">
+                <img src="../images/mfri_logo.png" , alt="MFRI Logo" , class="mfriLogo" />
             </div>
-            <div class='mfriTitle'>
+            <div class="mfriTitle">
                 <h1>Schedule Maintenance</h1>
                 <h2>Maryland Fire and Rescue Institute, University of Maryland</h2>
             </div>
-            <div class='otherLinks'>
+            <div class="otherLinks">
                 <p>Home | Profile | Logout</p>
             </div>
         </div>
     </div>
-    <div class='nav'>
+    <div class="nav">
         <ul>
-            <li><a href="../courseOverview/template.html">Course Overview</a></li>
-            <li><a href="../management/management.html">Course Management</a></li>
-            <li><a href="../workflow/workflow.html">Work Flow</a></li>
-            <li><a class='active' href="../scheduling/scheduling.html">Scheduling</a></li>
+            <li><a href="../courseOverview/template1.html">Course Info</a></li>
+            <li><a href="template.html">Course Management</a></li>
+            <li><a href="template.html">Work Flow</a></li>
+            <li><a class="active" href="">Scheduling</a></li>
             <li><a href="../registration/registration.html">Registration</a></li>
-            <li><a href="../fees/fees.html">Fees</a></li>
+            <li><a href="fees.html">Fees</a></li>
             <li><a href="../brochure/brochure.html">Brochure</a></li>
         </ul>
     </div>
@@ -47,33 +47,28 @@
             <p>Registration Open Date</p>
             <p>Registration Close Date</p>
             <p>Start Date</p>
-            <p>End Date</p>
-            <p>Recurring Days</p>
+            <p>End Date</p> 
+            <p>Recurring Days</p> 
         </div>
     </div>
+    
+    <div class="column2">
 
-    <div class='content'>
-        <div class='textbox'>
-            <form>
-                <label for='openDate'></label><br>
-                <input type='date' id='openDate' name='openDate'><br>
+        <input type="text" class="box1">
+        
+        <input type="text" class="box2">
 
-                <label for='closeDate'></label><br>
-                <input type='date' id='closeDate' name='closeDate'><br>
+        <input type="text" class="box3">
 
-                <label for='startDate'></label><br>
-                <input type='date' id='startDate' name='startDate'><br>
+        <input type="text" class="box4">
 
-                <label for='endDate'></label><br>
-                <input type='date' id='endDate' name='endDate'><br>
+        <input type="text" class="box5">
 
-                <label for='recurring'></label><br>
-                <input type='text' id='recurring' name='recurring'><br>
-              </form> 
-        </div>
+       
         <div class='saveButton'>
             <button class='button'>Next</button>
         </div>
+        
     </div>
 </body>
 

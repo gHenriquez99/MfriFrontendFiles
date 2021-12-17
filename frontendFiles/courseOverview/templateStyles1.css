@@ -81,7 +81,6 @@ li a.active {
     font-weight: SemiBold;
     font-family: IBM Plex Sans;
     margin-right: 5px;
-
 }
 
 .box1 {
@@ -158,4 +157,9 @@ li a.active {
     position: absolute;
     right: 32%;
     top: 850px;
+}
+
+.umdHeader {
+    font-family: IBM Plex Serif;
+    font-weight: SemiBold;
 }
