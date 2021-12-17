@@ -91,7 +91,38 @@ background-color: #ffffff;
     top: 250px;
     border: 2px solid grey;
     border-radius: 10px;
+
 }
+
+.form-inline {
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    height: 100%;
+    align-items: center;
+}
+
+.form-inline label {
+    margin: 5px 73px 5px 0;
+}
+#Min {
+    height: 30px;
+    width: 100px;
+}
+#Max {
+    height: 30px;
+    width: 100px;
+}
+#Registered {
+    height: 30px;
+    width: 100px;
+}
+#Dropped {
+    height: 30px;
+    width: 100px;
+}
+
+
 
 .input1 {
     background-color: rgb(254, 254, 254);
